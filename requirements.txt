@@ -1,0 +1,8 @@
+pip install streamlit
+pip install chromadb
+pip install langchain
+pip install langchain-community
+pip install langchain-google-genai
+pip install langchain-text-splitters
+pip install pypdf
+pip install python-dotenv
