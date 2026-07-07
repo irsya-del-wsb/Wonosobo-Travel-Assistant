@@ -1,0 +1,2 @@
+Cara penggunaan:
+  1. Buat file .env dan masukkan kode ini GOOGLE_API_KEY=AQ.Ab8RN6L30eTzw4obWHvnt7D3B_Y95jzUSvSJ7Th0VVLWYB-g6g 
