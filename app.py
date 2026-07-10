@@ -79,7 +79,13 @@ qa_chain = RetrievalQA.from_chain_type(
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+if "example_query" not in st.session_state:
+    st.session_state.example_query = None
+if "pending_query" not in st.session_state:
+    st.session_state.pending_query = None
 
+if "processing" not in st.session_state:
+    st.session_state.processing = False
 # =========================
 # SIDEBAR
 # =========================
@@ -87,6 +93,7 @@ if "messages" not in st.session_state:
 with st.sidebar:
 
     st.title("🏔️ Wonosobo Assistant")
+    st.caption("made with sshdq")
 
     if st.button("➕ Percakapan Baru"):
         st.session_state.messages = []
@@ -134,21 +141,85 @@ with st.sidebar:
 # =========================
 
 st.title("🏔️ Wonosobo Travel Assistant")
+st.caption(
+    "Asisten digitalmu buat kulonuwun ke Wonosobo! Nanya apa aja bebas—dari "
+    "tempat makan hits, hotel estetik, sampai hidden gems wisata ada di sini."
+)
+
+if len(st.session_state.messages) == 0:
+
+    st.markdown("""
+Hai, ada yang bisa saya bantu??
+
+Saya siap membantu Anda menjelajahi Wonosobo.
+
+Contoh pertanyaan:
+""")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        if st.button("Wisata terbaik di Dieng"):
+            st.session_state.example_query = "Wisata terbaik di Dieng"
+            st.rerun()
+
+        if st.button("Kuliner khas Wonosobo"):
+            st.session_state.example_query = "Kuliner khas Wonosobo"
+            st.rerun()
+
+    with col2:
+
+        if st.button("Hotel dekat Dieng"):
+            st.session_state.example_query = "Hotel di Dieng"
+            st.rerun()
+
+        if st.button("Cara ke Dieng"):
+            st.session_state.example_query = "Rute ke Dieng"
+            st.rerun()
+
+# =========================
+# TAMPILKAN RIWAYAT CHAT DULU
+# =========================
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
+# =========================
+# INPUT CHAT
+# =========================
+
 query = st.chat_input(
-    "Tanyakan wisata Wonosobo..."
+    "Tanyakan wisata Wonosobo...",
+    disabled=st.session_state.processing
 )
+# Jika user klik contoh pertanyaan
+if st.session_state.example_query:
+    query = st.session_state.example_query
+    st.session_state.example_query = None
 
-if query:
+# =========================
+# PROSES PERTANYAAN
+# =========================
+if st.session_state.processing and st.session_state.pending_query:
 
+    query = st.session_state.pending_query
+    st.session_state.pending_query = None
+
+if query and not st.session_state.processing:
+
+    st.session_state.pending_query = query
+    st.session_state.processing = True
+    st.rerun()
+
+if st.session_state.processing and query:
     st.session_state.messages.append(
-        {"role": "user", "content": query}
+        {
+            "role": "user",
+            "content": query
+        }
     )
-
     with st.chat_message("user"):
         st.write(query)
 
@@ -174,11 +245,16 @@ if query:
         with st.chat_message("assistant"):
             st.write(answer)
 
+        st.session_state.processing = False
+        st.rerun()
+
     except Exception as e:
 
-        error_msg = str(e)
+        st.session_state.processing = False
 
+        error_msg = str(e)
         if "429" in error_msg:
+
             st.warning("""
 ⚠️ Kuota Gemini API telah mencapai batas penggunaan.
 
@@ -189,16 +265,21 @@ Silakan:
 """)
 
         elif "quota" in error_msg.lower():
+
             st.warning("""
 ⚠️ Batas penggunaan Gemini API telah tercapai.
 Silakan coba kembali nanti.
 """)
 
         elif "rate limit" in error_msg.lower():
+
             st.warning("""
 ⚠️ Terlalu banyak permintaan ke Gemini API.
 Silakan tunggu beberapa saat lalu coba lagi.
 """)
 
         else:
-            st.error(f"Terjadi error: {error_msg}")
+
+            st.error(
+                f"Terjadi error: {error_msg}"
+            )
