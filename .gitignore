@@ -1,0 +1,20 @@
+#Python 
+__pycache__/
+*.pyc
+
+#Virtual Environtment
+venv/
+.venv/
+
+#Environtmen Variables
+.env
+
+#VSCode
+.vscode/
+
+#Chroma
+chroma_db/
+chroma.sqlite3
+
+#Jupyter
+.ipynb_checkpoints/
