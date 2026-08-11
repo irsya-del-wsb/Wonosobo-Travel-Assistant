@@ -23,7 +23,7 @@ if not GOOGLE_API_KEY:
     st.error("GOOGLE_API_KEY tidak ditemukan.")
     st.stop()
 
-MODEL_NAME = "gemini-2.5-flash-lite"
+MODEL_NAME = "gemini-3.5-flash-lite"
 TEMPERATURE = 1.2
 
 embeddings = GoogleGenerativeAIEmbeddings(
