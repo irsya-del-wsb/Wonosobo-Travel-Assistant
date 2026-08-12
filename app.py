@@ -135,17 +135,16 @@ if "processing" not in st.session_state:
 # =========================
 
 with st.sidebar:
-    st.image("data/WSB_LOGO.png", width=120)
     st.title("Wonosobo Assistant")
     st.caption("made with sshdq")
 
-    if st.button("➕ Percakapan Baru"):
+    if st.button("+ Percakapan Baru"):
         st.session_state.messages = []
         st.rerun()
 
     st.divider()
 
-    st.subheader("📜 Riwayat Pertanyaan")
+    st.subheader("Riwayat Pertanyaan")
 
     user_questions = [
         msg["content"]
@@ -161,13 +160,13 @@ with st.sidebar:
 
     st.divider()
 
-    st.subheader("📊 Statistik")
+    st.subheader("Statistik")
 
     st.caption(f"Total Pesan: {len(st.session_state.messages)}")
 
     st.divider()
 
-    st.subheader("📡 Status Sistem")
+    st.subheader("Status Sistem")
 
     st.success("Gemini API Aktif")
     st.success("ChromaDB Terhubung")
@@ -175,10 +174,10 @@ with st.sidebar:
 
     st.divider()
 
-    st.subheader("⚙️ Konfigurasi Model")
+    st.subheader("Konfigurasi Model")
 
-    st.caption(f"🤖 Model : {MODEL_NAME}")
-    st.caption(f"🌡️ Temperature : {TEMPERATURE}")
+    st.caption(f"Model : {MODEL_NAME}")
+    st.caption(f" Temperature : {TEMPERATURE}")
 
 # =========================
 # MAIN CHAT
@@ -187,7 +186,7 @@ col1, col2 = st.columns([1,6])
 with col1:
     st.image("data/WSB_LOGO.png")
 with col2 :
-    st.title("🏔️ Wonosobo Travel Assistant")
+    st.title(" Wonosobo Travel Assistant")
     st.caption(
         "Asisten digitalmu buat kulonuwun ke Wonosobo! Nanya apa aja bebas—dari "
         "tempat makan hits, hotel estetik, sampai hidden gems wisata ada di sini."
