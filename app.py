@@ -14,7 +14,7 @@ from langchain_classic.chains import RetrievalQA
 
 st.set_page_config(
     page_title="Chatbot Wisata WSB",
-    page_icon="data/LOGO_WSB.png",
+    page_icon="data/WSB_LOGO.png",
     layout="wide"
 )
 
@@ -135,7 +135,7 @@ if "processing" not in st.session_state:
 # =========================
 
 with st.sidebar:
-    st.image("data/LOGO_WSB.png", width=120)
+    st.image("data/WSB_LOGO.png", width=120)
     st.title("Wonosobo Assistant")
     st.caption("made with sshdq")
 
@@ -185,7 +185,7 @@ with st.sidebar:
 # =========================
 col1, col2 = st.columns([1,6])
 with col1:
-    st.image("data/LOGO_WSB.png")
+    st.image("data/WSB_LOGO.png")
 with col2 :
     st.title("🏔️ Wonosobo Travel Assistant")
     st.caption(
