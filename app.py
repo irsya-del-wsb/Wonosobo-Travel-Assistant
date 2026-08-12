@@ -12,6 +12,12 @@ from langchain_community.vectorstores import Chroma
 from langchain_core.prompts import PromptTemplate
 from langchain_classic.chains import RetrievalQA
 
+st.set_page_config(
+    page_title="Chatbot Wisata WSB",
+    page_icon="data/LOGO_WSB.png",
+    layout="wide"
+)
+
 load_dotenv()
 
 try:
@@ -100,6 +106,7 @@ QUESTION:
 
 ANSWER:
 """
+
 prompt = PromptTemplate(
     template=template,
     input_variables=["context", "question"]
@@ -128,8 +135,8 @@ if "processing" not in st.session_state:
 # =========================
 
 with st.sidebar:
-
-    st.title("🏔️ Wonosobo Assistant")
+    st.image("data/LOGO_WSB.png", width=120)
+    st.title("Wonosobo Assistant")
     st.caption("made with sshdq")
 
     if st.button("➕ Percakapan Baru"):
@@ -176,12 +183,15 @@ with st.sidebar:
 # =========================
 # MAIN CHAT
 # =========================
-
-st.title("🏔️ Wonosobo Travel Assistant")
-st.caption(
-    "Asisten digitalmu buat kulonuwun ke Wonosobo! Nanya apa aja bebas—dari "
-    "tempat makan hits, hotel estetik, sampai hidden gems wisata ada di sini."
-)
+col1, col2 = st.columns([1,6])
+with col1:
+    st.image("data/LOGO_WSB.png")
+with col2 :
+    st.title("🏔️ Wonosobo Travel Assistant")
+    st.caption(
+        "Asisten digitalmu buat kulonuwun ke Wonosobo! Nanya apa aja bebas—dari "
+        "tempat makan hits, hotel estetik, sampai hidden gems wisata ada di sini."
+    )
 
 if len(st.session_state.messages) == 0:
 
